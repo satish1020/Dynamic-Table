@@ -29,6 +29,13 @@ export default function Table() {
       setEndData(event.target.value);
     }
 
+    const handleSave  = () =>{
+      const addedEventInfo = {eventName,startDate,endDate};
+      const updatedEventInfo = [...eventInfo, addedEventInfo]
+      setEventInfo(updatedEventInfo);
+      setIsTableVisibility(false);
+    }
+
     const addNewRow = () => {
       return(
         <div>
@@ -37,7 +44,7 @@ export default function Table() {
             <input type='text'  name='eventName' required='required' placeholder='Enter an event Name' onChange= {(e) => handleEventName(e)}/>
             <input type='text'  name='startDate' required='required' placeholder='Enter start Date' onChange= {(e) => handleStartDate(e)}/>
             <input type='text'  name='endDate' required='required' placeholder='Enter end Date' onChange= {(e) => handleEndDate(e)}/>
-            <button onClick= 'handleSave'>Save</button>
+            <button onClick= {() => handleSave()}>Save</button>
             <button> Cancel</button>
             </form>}
         </div>
@@ -47,14 +54,16 @@ export default function Table() {
     const getTable = () => {
       return(
         <table>
+          <thead>
         <tr>
         <th>Event Name</th>
         <th>Start Date</th>
         <th>End Date</th>
         </tr>
+        </thead>
         <tbody>
-              {eventInfo.map((item) => (
-                   <tr>
+              {eventInfo.map((item,index) => (
+                   <tr key={index}>
                      <td>{item.eventName}</td> 
                       <td>{item.startDate}</td>
                       <td>{item.endDate}</td>
